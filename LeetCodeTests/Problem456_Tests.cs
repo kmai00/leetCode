@@ -64,8 +64,19 @@ namespace LeetCode
         }
 
         [Test]
-        public void Example_4() { 
-            var nums = new int[] { 3, 5, 0, 3, 4};
+        public void Example_4()
+        {
+            var nums = new int[] { 3, 5, 0, 3, 4 };
+            var result = _sut.Find132Pattern(nums);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void Example_5()
+        {
+
+            var nums = new int[] { 1, 4, 0, -1, -2, -3, -1, -2 };
             var result = _sut.Find132Pattern(nums);
 
             Assert.IsTrue(result);

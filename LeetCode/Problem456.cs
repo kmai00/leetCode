@@ -27,10 +27,10 @@ namespace LeetCode
 
             var pivotIndex = nums.Length / 2;
 
-            return Find132Pattern(pivotIndex, nums);
+            return Find132Pattern(pivotIndex, 0, nums.Length - 1, nums);
         }
 
-        public bool Find132Pattern(int pivotIndex, int[] nums)
+        public bool Find132Pattern(int pivotIndex, int leftEnd, int rightEnd, int[] nums)
         {
             var pivotValue = nums[pivotIndex];
 
@@ -64,24 +64,25 @@ namespace LeetCode
             var rightPivot = pivotIndex + 1;
 
             var hasPattern = false;
-            if (leftPivot <= 0)
+            if (leftPivot <= 0 || leftPivot <= leftEnd)
             {
-                return false;
+                hasPattern = false;
             }
             else
             {
-                hasPattern = Find132Pattern(leftPivot, nums);
+
+                hasPattern = Find132Pattern(leftPivot, leftEnd, leftPivot, nums);
             }
 
             if (!hasPattern)
             {
-                if (rightPivot >= nums.Length - 1)
+                if (rightPivot >= nums.Length - 1 || rightPivot >= rightEnd)
                 {
-                    return false;
+                    hasPattern = false;
                 }
                 else
                 {
-                    hasPattern = Find132Pattern(rightPivot, nums);
+                    hasPattern = Find132Pattern(rightPivot, rightPivot, rightEnd, nums);
                 }
             }
 
