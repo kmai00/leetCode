@@ -25,23 +25,21 @@ namespace LeetCode
             }
 
             var sizeLimit = haystack.Length - needle.Length;
-            var correctness = 0;
             for (var startingIndex = 0; startingIndex <= sizeLimit; startingIndex++)
             {
-                for (var j = 0; j < needle.Length; j++)
+                int j = 0;
+                for (j = 0; j < needle.Length; j++)
                 {
-                    if (haystack[startingIndex + correctness] != needle[j])
+                    if (haystack[startingIndex + j] != needle[j])
                     {
                         break;
                     }
-                    correctness++;
                 }
 
-                if (correctness == needle.Length)
+                if (j == needle.Length)
                 {
                     return startingIndex;
                 }
-                correctness = 0;
             }
 
             return -1;
