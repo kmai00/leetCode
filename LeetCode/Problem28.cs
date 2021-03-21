@@ -12,6 +12,43 @@ namespace LeetCode
     {
         public int StrStr(string haystack, string needle)
         {
+            // Attempt 2
+            // Count the "correctness"
+            if (string.IsNullOrEmpty(needle))
+            {
+                return 0;
+            }
+
+            if (needle.Length > haystack.Length)
+            {
+                return -1;
+            }
+
+            var sizeLimit = haystack.Length - needle.Length;
+            var correctness = 0;
+            for (var startingIndex = 0; startingIndex <= sizeLimit; startingIndex++)
+            {
+                for (var j = 0; j < needle.Length; j++)
+                {
+                    if (haystack[startingIndex + correctness] != needle[j])
+                    {
+                        break;
+                    }
+                    correctness++;
+                }
+
+                if (correctness == needle.Length)
+                {
+                    return startingIndex;
+                }
+                correctness = 0;
+            }
+
+            return -1;
+        }
+
+        public int StrStr_Attempt1(string haystack, string needle)
+        {
             if (string.IsNullOrEmpty(needle))
             {
                 return 0;

@@ -53,5 +53,15 @@ namespace LeetCodeTests
             var result = _sut.StrStr(haystack, needle);
             Assert.AreEqual(-1, result);
         }
+        
+        [Test]
+        public void SingleCharacter() { 
+            var haystack = "a";
+            var needle = "a";
+
+            var result = _sut.StrStr(haystack, needle);
+            Assert.AreEqual(0, result);
+        }
+
     }
 }
