@@ -12,9 +12,14 @@ namespace LeetCode
     {
         public int StrStr(string haystack, string needle)
         {
-            if (string.IsNullOrEmpty(needle))
+            if (string.IsNullOrEmpty(needle) || string.IsNullOrEmpty(needle))
             {
                 return 0;
+            }
+
+            if (needle.Length > haystack.Length)
+            {
+                return -1;
             }
 
             // Find all potential candidate
@@ -35,10 +40,12 @@ namespace LeetCode
             }
 
             var startingIndex = -1;
-            for (var i = 0; i < candidates.Count; i++) {
+            for (var i = 0; i < candidates.Count; i++)
+            {
                 var candidate = candidates[i];
-                if (candidate == needle) {
-                    startingIndex = candidatesIndex[i]; 
+                if (candidate == needle)
+                {
+                    startingIndex = candidatesIndex[i];
                     break;
                 }
             }
