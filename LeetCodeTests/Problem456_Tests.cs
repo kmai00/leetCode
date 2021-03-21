@@ -1,6 +1,7 @@
+using LeetCode;
 using NUnit.Framework;
 
-namespace LeetCode
+namespace LeetCodeTests
 {
     public class Problem456_Tests
     {
