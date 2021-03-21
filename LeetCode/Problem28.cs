@@ -12,7 +12,7 @@ namespace LeetCode
     {
         public int StrStr(string haystack, string needle)
         {
-            if (string.IsNullOrEmpty(needle) || string.IsNullOrEmpty(needle))
+            if (string.IsNullOrEmpty(needle))
             {
                 return 0;
             }
