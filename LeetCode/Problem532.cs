@@ -25,18 +25,31 @@ namespace LeetCode
             // Need to add non zero to the end to get count
 
             var count = 0;
+            var duplicateCount = 0;
 
-            var duplicateCount = new Dictionary<int, int>();
+            var duplicates = new Dictionary<int, bool>();
             var uniqueNumber = new List<int>();
             foreach (var num in nums)
             {
-                var value = duplicateCount.ContainsKey(num) ? duplicateCount[num] + 1 : 1; // This operation isn't needed
-                duplicateCount[num] = value;
-
-                if (value == 1)
+                if (duplicates.ContainsKey(num) && !duplicates[num])
+                {
+                    duplicateCount++;
+                    duplicates[num] = true;
+                }
+                else if (duplicates.ContainsKey(num) && duplicates[num])
+                {
+                    continue;
+                }
+                else
                 {
                     uniqueNumber.Add(num);
+                    duplicates.Add(num, false);
                 }
+            }
+
+            if (k == 0)
+            {
+                return duplicateCount;
             }
 
             for (var i = 0; i < uniqueNumber.Count - 1; i++)
@@ -53,14 +66,6 @@ namespace LeetCode
                 }
             }
 
-            if (k == 0)
-            {
-                var duplicates = duplicateCount.Where(kp => kp.Value > 1).Select(kp => kp.Value).ToList();
-                foreach (var dup in duplicates)
-                {
-                    count++;
-                }
-            }
 
             return count;
         }
