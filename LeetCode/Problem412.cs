@@ -15,29 +15,45 @@ namespace LeetCode
         public IList<string> FizzBuzz(int n)
         {
             var result = new List<string>();
+            var threeTracker = 0;
+            var fiveTracker = 0;
+            var phrase = string.Empty;
             for (var i = 1; i <= n; i++)
             {
-                string phrase = i.ToString();
+                threeTracker++;
+                fiveTracker++;
 
-                var isThreeDivisble = i % 3 == 0;
-                var isFiveDivisible = i % 5 == 0;
+                var isThree = threeTracker == 3;
+                var isFive = fiveTracker == 5;
 
-                if (isThreeDivisble)
+                if (isThree)
                 {
                     phrase = "Fizz";
+                    threeTracker = 0;
                 }
 
-                if (isFiveDivisible)
+                if (isFive)
                 {
                     phrase = "Buzz";
+                    fiveTracker = 0;
                 }
 
-                if (isFiveDivisible && isThreeDivisble)
+                if (isThree && isFive)
                 {
                     phrase = "FizzBuzz";
+                    threeTracker = 0;
+                    fiveTracker = 0;
                 }
 
+
+                if (phrase.Length == 0)
+                {
+                    phrase = i.ToString();
+                }
+
+
                 result.Add(phrase);
+                phrase = string.Empty;
             }
 
             return result;
