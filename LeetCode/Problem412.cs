@@ -17,7 +17,6 @@ namespace LeetCode
             var result = new List<string>();
             var threeTracker = 0;
             var fiveTracker = 0;
-            var phrase = string.Empty;
             for (var i = 1; i <= n; i++)
             {
                 threeTracker++;
@@ -26,34 +25,29 @@ namespace LeetCode
                 var isThree = threeTracker == 3;
                 var isFive = fiveTracker == 5;
 
-                if (isThree)
-                {
-                    phrase = "Fizz";
-                    threeTracker = 0;
-                }
-
-                if (isFive)
-                {
-                    phrase = "Buzz";
-                    fiveTracker = 0;
-                }
-
+                string phrase;
                 if (isThree && isFive)
                 {
                     phrase = "FizzBuzz";
                     threeTracker = 0;
                     fiveTracker = 0;
                 }
-
-
-                if (phrase.Length == 0)
+                else if (isFive)
+                {
+                    phrase = "Buzz";
+                    fiveTracker = 0;
+                }
+                else if (isThree)
+                {
+                    phrase = "Fizz";
+                    threeTracker = 0;
+                }
+                else
                 {
                     phrase = i.ToString();
                 }
 
-
                 result.Add(phrase);
-                phrase = string.Empty;
             }
 
             return result;
