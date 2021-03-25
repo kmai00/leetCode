@@ -28,7 +28,7 @@ namespace LeetCode
             var duplicateCount = 0;
 
             var duplicates = new Dictionary<int, bool>();
-            var uniqueNumber = new List<int>();
+            var uniqueNumbers = new HashSet<int>();
             foreach (var num in nums)
             {
                 if (duplicates.ContainsKey(num) && !duplicates[num])
@@ -42,7 +42,7 @@ namespace LeetCode
                 }
                 else
                 {
-                    uniqueNumber.Add(num);
+                    uniqueNumbers.Add(num);
                     duplicates.Add(num, false);
                 }
             }
@@ -52,17 +52,11 @@ namespace LeetCode
                 return duplicateCount;
             }
 
-            for (var i = 0; i < uniqueNumber.Count - 1; i++)
+            foreach (var uniqueNumber in uniqueNumbers)
             {
-                for (var j = i + 1; j < uniqueNumber.Count; j++)
-                {
-                    var num1 = uniqueNumber[i];
-                    var num2 = uniqueNumber[j];
-                    var result = Math.Abs(num1 - num2);
-                    if (result == k)
-                    {
-                        count++;
-                    }
+                var result = uniqueNumber + k;
+                if (uniqueNumbers.Contains(result)){
+                    count++;
                 }
             }
 
