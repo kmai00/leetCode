@@ -68,5 +68,14 @@ namespace LeetCodeTests
             Assert.AreEqual(2, result);
         }
 
+        [Test]
+        public void Example_6()
+        {
+            var nums = new int[] { 1, 1, 1, 1 };
+            var k = 0;
+
+            var result = _sut.FindPairs(nums, k);
+            Assert.AreEqual(1, result);
+        }
     }
 }
