@@ -18,58 +18,41 @@ namespace LeetCode
     {
         public int FindLHS(int[] nums)
         {
-            // Let's try something dumb first...
-
-            var numberTracker = new HashSet<int>(); // Key and count
-            var biggestCount = 0;
-            for (int i = 0; i < nums.Length; i++)
+            var numberCount = new Dictionary<int, int>();
+            foreach (var num in nums)
             {
-                var smallCount = 0;
-                var bigCount = 0;
-                var isOnlyKey = true;
-                var key = nums[i];
-                if (numberTracker.Contains(key))
+                if (numberCount.ContainsKey(num))
                 {
-                    continue; //skip cause we already counted you
+                    numberCount[num]++;
                 }
                 else
                 {
-                    smallCount = 1;
-                    bigCount = 1;
+                    numberCount[num] = 1;
                 }
+            }
 
-                for (int j = i + 1; j < nums.Length; j++)
+            var biggestCount = 0;
+            foreach (var number in numberCount)
+            {
+                var bigPartner = number.Key + 1;
+                var smallCount = 0;
+                if (numberCount.ContainsKey(bigPartner))
                 {
-                    var candidate = nums[j];
-                    // Count for when I'm the smallest
-                    // Count for when I'm the biggest
-                    // Take the bigger Count
-
-                    if (candidate == key) // TODO need to count whenever it's not the only one in the list...
-                    {
-                        smallCount++;
-                        bigCount++;
-                    }
-                    else if (key + 1 == candidate)
-                    {
-                        bigCount++;
-                        isOnlyKey = false;
-                    }
-                    else if (key - 1 == candidate)
-                    {
-                        smallCount++;
-                        isOnlyKey = false;
-                    }
-
+                    smallCount = number.Value + numberCount[bigPartner];
                 }
 
-                var higherCount = isOnlyKey ? 0 : Math.Max(smallCount, bigCount);
-
-                if (higherCount > biggestCount)
+                var smallPartner = number.Key - 1;
+                var bigCount = 0;
+                if (numberCount.ContainsKey(smallPartner))
                 {
-                    biggestCount = higherCount;
+                    bigCount = number.Value + numberCount[smallPartner];
                 }
 
+                var result = Math.Max(bigCount, smallCount);
+                if (result > biggestCount)
+                {
+                    biggestCount = result;
+                }
             }
 
             return biggestCount;
