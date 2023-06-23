@@ -19,50 +19,74 @@ namespace LeetCode
         // Walk until I see the next one
         // this is like a breath first search thing
 
+        // Why don't I just search?
+        // And as I walk the path, I can check if the path is block... if all path is blocked then return -1
+        // Keep track of the starting cost of each objet
+
         public int CutOffTree(List<List<int>> forest)
         {
+
+            var queue = new Queue<StartingPoint>();
+            queue.Enqueue(new StartingPoint(0, 0));
+
+            // Under assumption that starting one is the lowest
             var treesToCut = forest.SelectMany(f => f).Where(f => f > 1).Count();
-            var steps = GetNextTree(forest, 0, 0, forest[0][0], 0, ref treesToCut);
+            var treeToCutNext = forest[0][0] + 1;
+            var steps = 0;
+            while (queue.TryDequeue(out var startingPoint))
+            {
+                var currentTreeValue = forest[startingPoint.row][startingPoint.col];
+
+                if (treeToCutNext == currentTreeValue)
+                {
+                    treesToCut--;
+                    treeToCutNext++;
+                    queue.Clear();
+                }
+
+                if (treesToCut == 0)
+                {
+                    break;
+                }
+
+                steps++;
+                // Handle North
+                if (startingPoint.row > 0)
+                {
+                    queue.Enqueue(new StartingPoint(startingPoint.row - 1, startingPoint.col));
+                }
+                // Handle West
+                if (startingPoint.col > 0)
+                {
+                    queue.Enqueue(new StartingPoint(startingPoint.row, startingPoint.col -1));
+                }
+                // Handle East
+                if (startingPoint.col < forest[0].Count)
+                {
+                    queue.Enqueue(new StartingPoint(startingPoint.row, startingPoint.col + 1));
+                }
+                // Handle South
+                if (startingPoint.row < forest.Count)
+                {
+                    queue.Enqueue(new StartingPoint(startingPoint.row + 1, startingPoint.col));
+                }
+
+            }
+
             return steps;
-        }
 
-        public int GetNextTree(List<List<int>> forest, int startingRow, int startingCol, int previousTreeValue, int startinStep, ref int treesToCut)
+        }
+    }
+
+    public class StartingPoint
+    {
+        public StartingPoint(int row, int col)
         {
-            var currentTreeValue = forest[startingRow][startingCol];
-            if (currentTreeValue == 0)
-            {
-                return -1;
-            }
-
-            if (currentTreeValue == previousTreeValue + 1)
-            {
-                treesToCut--;
-                return 1;
-            }
-
-            // Check bottom
-            // TODO update the check
-            var bottomStep = GetNextTree(forest, startingRow, startingCol + 1, currentTreeValue, startinStep, ref treesToCut);
-            // Check right
-            var rightStep = GetNextTree(forest, startingRow + 1, startingCol, currentTreeValue, startinStep, ref treesToCut);
-
-            if (bottomStep == -1 && rightStep != -1)
-            {
-                return startinStep + rightStep;
-            }
-            else if (rightStep == -1 && bottomStep != -1)
-            {
-                return startinStep + bottomStep;
-            }
-
-            if (treesToCut != 0)
-            {
-                // Keep going down or right
-            }
-            else
-            {
-                return startinStep + Math.Min(bottomStep, rightStep);
-            }
+            this.row = row;
+            this.col = col;
         }
+
+        public int row;
+        public int col;
     }
 }
