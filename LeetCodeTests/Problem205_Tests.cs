@@ -24,6 +24,13 @@ namespace LeetCodeTests
         }
 
         [Test]
+        public void Example3_Ok()
+        {
+            var result = sut.IsIsomorphic("paper", "title");
+            Assert.IsTrue(result);
+        }
+
+        [Test]
         public void Example37_Ok()
         {
             var result = sut.IsIsomorphic("badc", "baba");

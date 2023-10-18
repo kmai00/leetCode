@@ -13,33 +13,27 @@ namespace LeetCode
                 return false;
             }
 
-            var sCharMap = new Dictionary<char, char>();
-            var tCharMap = new Dictionary<char, char>();
+            var charMap = new Dictionary<char, char>();
             for (var i = 0; i < s.Length; i++)
             {
                 var sChar = s[i];
                 var tChar = t[i];
 
-                if (sCharMap.ContainsKey(sChar) && tCharMap.ContainsKey(tChar))
+                if (charMap.ContainsKey(sChar))
                 {
-                    var tCandidate = sCharMap[sChar];
-                    var sCandidate = tCharMap[tChar];
+                    var tCandidate = charMap[sChar];
 
-                    if (sChar != sCandidate || tCandidate != tChar)
+                    if (tCandidate != tChar)
                     {
                         return false;
                     }
                 }
-                else if (sCharMap.ContainsKey(sChar) && !tCharMap.ContainsKey(tChar)) {
-                    return false;
-                }
-                else if (!sCharMap.ContainsKey(sChar) && tCharMap.ContainsKey(tChar)) {
-                    return false;
-                }
                 else
                 {
-                    sCharMap.Add(sChar, tChar);
-                    tCharMap.Add(tChar, sChar);
+                    if (charMap.ContainsValue(tChar)) {
+                        return false;
+                    }
+                    charMap.Add(sChar, tChar);
                 }
             }
 
